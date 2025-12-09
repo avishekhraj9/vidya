@@ -3,12 +3,13 @@ import SectionHeader from "@/components/SectionHeader";
 import { courses } from "@/lib/courses";
 import { notFound } from "next/navigation";
 
-export default function CourseDetailPage({
+export default async function CourseDetailPage({
   params
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const course = courses.find((c) => c.id === params.id);
+  const { id } = await params;
+  const course = courses.find((c) => c.id === id);
   if (!course) return notFound();
 
   return (

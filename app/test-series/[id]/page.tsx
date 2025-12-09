@@ -2,12 +2,13 @@ import Button from "@/components/Button";
 import { testSeries } from "@/lib/testSeries";
 import { notFound } from "next/navigation";
 
-export default function TestAttemptPage({
+export default async function TestAttemptPage({
   params
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const series = testSeries.find((t) => t.id === params.id);
+  const { id } = await params;
+  const series = testSeries.find((t) => t.id === id);
   if (!series) return notFound();
 
   return (
